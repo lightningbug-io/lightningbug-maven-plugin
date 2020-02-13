@@ -27,20 +27,16 @@ public class BuildInfoTest {
 	 * 
 	 */
 	private static final String START_TIME = "2020-02-29T00:00:00+05:00[GMT+05:00]";
-	private static InfrastructureInfo infrastructureInfo;
+	private static final InfrastructureInfo infrastructureInfo = new InfrastructureInfo();
 	private static ProjectInfo projectInfo;
 	private static ZonedDateTime startTime;
 	private static ZonedDateTime endTime;
 
 	@Before
 	public void beforeAllTestMethods() {
-		infrastructureInfo = new InfrastructureInfo();
 		projectInfo = mock(ProjectInfo.class);
 		startTime = ZonedDateTime.of(2020, 2, 29, 0, 0, 0, 0, ZoneId.of(GMT_5));
 		endTime = ZonedDateTime.of(2020, 2, 29, 0, 0, 5, 0, ZoneId.of(GMT_5));
-		if (projectInfo == null) {
-			System.out.println("Not working");
-		}
 	}
 
 	@Test(expected = IllegalArgumentException.class)

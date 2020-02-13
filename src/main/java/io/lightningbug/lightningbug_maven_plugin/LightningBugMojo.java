@@ -1,6 +1,9 @@
 package io.lightningbug.lightningbug_maven_plugin;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.time.ZonedDateTime;
 import java.util.List;
 
@@ -42,11 +45,21 @@ import io.lightningbug.staticanalysis.JavaParserVisitor;
  * @since 1.0
  */
 
-@Mojo(name = "lightningbug", defaultPhase=LifecyclePhase.GENERATE_SOURCES, requiresDependencyResolution=ResolutionScope.COMPILE, threadSafe=true)
+@Mojo(name = "lightningbug", defaultPhase = LifecyclePhase.GENERATE_SOURCES, requiresDependencyResolution = ResolutionScope.COMPILE, threadSafe = true)
 
 public class LightningBugMojo extends AbstractMojo {
 	@Component
 	private RepositorySystem repoSystem;
+	/**
+	 * The location of the source code
+	 * 
+	 * @parameter expression="${project.build.sourceDirectory}"
+	 * @required
+	 * @readonly
+	 */
+	@Parameter(property = "generateCodeReport", required = false)
+	private boolean generateBuildReport;
+
 	/**
 	 * The location of the source code
 	 * 
@@ -98,7 +111,29 @@ public class LightningBugMojo extends AbstractMojo {
 		jpVisitor.processDirectory(projectDirectory, transitiveDependencies);
 		jpVisitor.processDirectory(new File(this.testSourceDirectory.getAbsolutePath()), transitiveDependencies);
 		BuildInfo buildInfo = new BuildInfo(new InfrastructureInfo(), projectInfo, startTime, ZonedDateTime.now());
+		getLog().debug("About to start generating the file");
+		generateBuildReport(buildInfo);
 		getLog().info(buildInfo.toString());
+	}
+
+	private void generateBuildReport(BuildInfo buildInfo) {
+		if (generateBuildReport) {
+			File dir = new File(project.getBuild().getDirectory());
+			if (dir != null && dir.exists() && dir.isDirectory()) {
+				File file = new File(dir.getAbsolutePath() + "\\lightningbug" + System.currentTimeMillis() + ".json");
+				try {
+					if (file.createNewFile()) {
+						try (PrintWriter writer = new PrintWriter(file)) {
+							writer.println(buildInfo.toString());
+						} catch (FileNotFoundException e) {
+							getLog().debug(e.getMessage());
+						}
+					}
+				} catch (IOException e) {
+					getLog().debug(e.getMessage());
+				}
+			}
+		}
 	}
 
 }

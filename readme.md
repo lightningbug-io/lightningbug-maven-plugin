@@ -1,4 +1,8 @@
 # lightningbug-maven-plugin
+[![GitHub issues](https://img.shields.io/github/issues/lightningbug-io/lightningbug-maven-plugin)](https://github.com/lightningbug-io/lightningbug-maven-plugin/issues)
+
+https://img.shields.io/github/license/lightningbug-io/lightningbug-maven-plugin
+
 A Maven Plugin for Collecting Metrics for Java Projects
 
 [Lightning Bug](http://www.lightningbug.io) is a tool that aims to collect information about software to establish a chain of trust.  
@@ -81,3 +85,11 @@ Yes!  It is on the product roadmap.
 ### Are you going to support TestNG tests?
 Yes!  It is on the product roadmap.
 
+## Release History
+### 0.0.5
+
+* First public release
+
+## Issues
+
+Please consult our [issue management rules](ISSUES.md) before creating or working on issues. 

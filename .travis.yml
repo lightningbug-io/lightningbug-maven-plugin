@@ -1,0 +1,10 @@
+language: java
+addons:
+  sonarcloud:
+    organization: "lightningbug-io"
+    token:
+      secure: "n0vuBB1jRba6HjK4Q1bE3Me5Ogs9m5BnlK1nEyTiyAwGPh5HVzNv5aRVwS9O4/fz9remgjhdqSAm09QuYEa1MLgfBrfoXxpryvQDZwj7G/5zrem/fuvL8bcfL4RDX2T2TwW8I3x1vmlXa28l2h+2aMUjJoYte9y4O1LXuCVukIUSoYwQ7SdO2qKCA2Q2pK7cgQKMq0yWTdWCDOavuiSZt3h0spVUAFznEYww8Lh12EEezKEmN51IOdByc5B7mcV3NHckyViPEa/ai+aVRuim+jNF/esWPF2EyRkfCYPkcKSpPuuEREhZGxsOhWaQa5iTv8ZeLPKSyVLhKNmyKf8ohUM6SVjMOkjejKxfQ/FKCXFDDhBCAfW7viDQQZ+AoEEhnLMnq/6RqUmV8EB6k9EFPUKi8SEYvZjd2mL6UNRsTol3Sw9hPKiZZcA6ZjPgItREV8Glopq1C6Z8/9FInhVMTD7ireYLiIoogtEvpPv3f70tqkRFEok1KbcvzY/fVnyPYke1dhYCU5JXLKMgTVsyywCuX3Quu7M56Oa6sRa3pUofdJDb82kzpI70UKJt3JlFO+g1O+CXdKSztI3pCIo3qVpgobe0IS38tYynhhneHkjsX78AyuKxzfKhwlxlJAMxbo+m7QRtFCL5HQdZR1WZ7gh/QRMSZ3Airfq7ksW5PVk="
+
+script:
+  # the following command line builds the project, runs the tests with coverage and then execute the SonarCloud analysis
+  - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -Dsonar.projectKey=lightningbug-io_lightningbug-maven-plugin
