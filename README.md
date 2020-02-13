@@ -55,8 +55,6 @@ A chain of trust is a term from IT security used to describe the level of trust 
 > "A major design problem for the signing process is whether the person who signs the artifact, especially if he is taking a personal responsibility, has at all a realistic chance of knowing what he signs. Ideally, this would be solved by extending the tamper-proof supply chain to the individual developer taking personal, non-repudiable responsibility for every artifact he checks into the configuration management system. Other signatures could attest to successful code reviews and passing several levels of testing and other quality assurance."
 Lightning Bug was built off the insight in the last sentence.
 
-### So what is the chain of trust for Lightning Bug?
-Great question!
 ### Why are you doing this?
 During the research for a dissertation, the maintainer of this code discovered that many large technology companies have separately developed similar internal solutions for managing flakiness.  The idea behind Lightning Bug was to make a standard tool that would help other companies develop more reliable software.
 ### Doesn't SonarQube do this already?
