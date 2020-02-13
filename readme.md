@@ -1,7 +1,9 @@
 # lightningbug-maven-plugin
 [![GitHub issues](https://img.shields.io/github/issues/lightningbug-io/lightningbug-maven-plugin)](https://github.com/lightningbug-io/lightningbug-maven-plugin/issues)
+[![Maven Central Status](https://img.shields.io/maven-central/v/io.lightningbug/lightningbug-maven-plugin)](https://mvnrepository.com/artifact/io.lightningbug)
+[![Licensing](https://img.shields.io/github/license/lightningbug-io/lightningbug-maven-plugin)](https://github.com/lightningbug-io/lightningbug-maven-plugin/blob/master/LICENSE)
 
-https://img.shields.io/github/license/lightningbug-io/lightningbug-maven-plugin
+
 
 A Maven Plugin for Collecting Metrics for Java Projects
 
