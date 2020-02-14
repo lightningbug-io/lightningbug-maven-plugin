@@ -7,6 +7,7 @@ import java.util.Collection;
 import java.util.List;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.maven.plugin.logging.Log;
 
 import com.github.javaparser.JavaParser;
 import com.github.javaparser.ParserConfiguration;
@@ -50,9 +51,11 @@ import io.lightningbug.exceptions.LambdaExceptionWrappers;
 public class JavaParserVisitor extends VoidVisitorAdapter<Void> implements ASTJavaProjectParsable {
 	private ProjectInfo projectInfo;
 	private JavaParserFacade javaParserFacade;
-
-	public JavaParserVisitor(ProjectInfo projectInfo) {
+	private final Log LOGGER;
+	
+	public JavaParserVisitor(ProjectInfo projectInfo, Log log) {
 		this.projectInfo = projectInfo;
+		this.LOGGER = log;
 	}
 
 	public ProjectInfo processDirectory(File dir, List<DependencyInfo> externalJars) {
@@ -131,9 +134,9 @@ public class JavaParserVisitor extends VoidVisitorAdapter<Void> implements ASTJa
 			try {
 				functionCalls.add(resolveMethodStatements(m));
 			} catch (UnsolvedSymbolException ex) {
-				System.out.println("Couldn't find " + m.getNameAsString());
+				LOGGER.error("Couldn't find " + m.getNameAsString());
 			} catch (RuntimeException ex) {
-				System.out.println("Hit a runtime exception: " + ex.getMessage());
+				LOGGER.error("Hit a runtime exception: " + ex.getMessage());
 			}
 		});
 		FunctionInfo functionInfo = new FunctionInfo(node.getNameAsString(), loc, startLine, endLine, paramsAsStrings,

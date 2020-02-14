@@ -107,7 +107,7 @@ public class LightningBugMojo extends AbstractMojo {
 		List<DependencyInfo> transitiveDependencies = pomParser.resolveAllTransitiveDependencies(this.project);
 		ProjectInfo projectInfo = new ProjectInfo(project, ZonedDateTime.now());
 		File projectDirectory = new File(this.sourceDirectory.getAbsolutePath());
-		JavaParserVisitor jpVisitor = new JavaParserVisitor(projectInfo);
+		JavaParserVisitor jpVisitor = new JavaParserVisitor(projectInfo, getLog());
 		jpVisitor.processDirectory(projectDirectory, transitiveDependencies);
 		jpVisitor.processDirectory(new File(this.testSourceDirectory.getAbsolutePath()), transitiveDependencies);
 		BuildInfo buildInfo = new BuildInfo(new InfrastructureInfo(), projectInfo, startTime, ZonedDateTime.now());
