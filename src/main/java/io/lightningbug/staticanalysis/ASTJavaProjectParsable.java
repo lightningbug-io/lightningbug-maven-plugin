@@ -1,15 +1,11 @@
 package io.lightningbug.staticanalysis;
 
 import java.io.File;
-
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import io.lightningbug.domain.DependencyInfo;
-import io.lightningbug.domain.FunctionCallInfo;
-import io.lightningbug.domain.FunctionInfo;
 import io.lightningbug.domain.ProjectInfo;
 
 /**

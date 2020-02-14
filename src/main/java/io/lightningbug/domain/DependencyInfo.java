@@ -3,7 +3,6 @@ package io.lightningbug.domain;
 import java.io.File;
 
 import org.apache.maven.model.Dependency;
-import org.checkerframework.checker.nullness.qual.NonNull;
 
 public class DependencyInfo {
 	private final String groupId;

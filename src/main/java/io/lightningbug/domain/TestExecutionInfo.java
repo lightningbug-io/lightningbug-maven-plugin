@@ -2,7 +2,6 @@ package io.lightningbug.domain;
 
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonGetter;
@@ -14,9 +13,7 @@ public class TestExecutionInfo {
 	private ZonedDateTime endTime;
 	private boolean signal;
 	private String name;
-	private int loc = 0;
 	private int mutationScore = 0;
-	private AtomicInteger cyclotomicComplexity = new AtomicInteger(0);
 
 	@JsonCreator
 	public TestExecutionInfo(String name, ZonedDateTime startTime) {
@@ -31,10 +28,9 @@ public class TestExecutionInfo {
 
 	@JsonGetter("endTime")
 	public String getEndTime() {
-		if(this.endTime != null) {
-		return endTime.format(DateTimeFormatter.ISO_ZONED_DATE_TIME);
-		}
-		else { 
+		if (this.endTime != null) {
+			return endTime.format(DateTimeFormatter.ISO_ZONED_DATE_TIME);
+		} else {
 			return "";
 		}
 	}
@@ -66,7 +62,7 @@ public class TestExecutionInfo {
 	public void setMutationScore(int mutationScore) {
 		this.mutationScore = mutationScore;
 	}
-	
+
 	public String toString() {
 		ObjectMapper objectMapper = new ObjectMapper();
 		try {

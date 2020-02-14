@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.filefilter.TrueFileFilter;
@@ -35,8 +36,6 @@ import org.eclipse.jdt.core.dom.TryStatement;
 import org.eclipse.jdt.core.dom.TypeDeclaration;
 import org.eclipse.jdt.core.dom.TypeDeclarationStatement;
 import org.eclipse.jdt.core.dom.WhileStatement;
-
-import com.github.javaparser.ast.stmt.CatchClause;
 
 import io.lightningbug.domain.CodeInfo;
 import io.lightningbug.domain.FunctionCallInfo;
@@ -77,8 +76,8 @@ public class EclipseJDTVisitor extends ASTVisitor {
 		this.parser.setResolveBindings(true);
 		this.parser.setBindingsRecovery(true);
 		this.parser.setUnitName(unitName);
-		this.parser.setEnvironment(new String[] { sourceDir.getAbsolutePath() }, new String[] { sourceDir.getAbsolutePath() }, new String[] { "UTF-8" },
-				true);
+		this.parser.setEnvironment(new String[] { sourceDir.getAbsolutePath() },
+				new String[] { sourceDir.getAbsolutePath() }, new String[] { "UTF-8" }, true);
 		this.parser.setSource(source.toCharArray());
 		this.unit = (CompilationUnit) this.parser.createAST(null);
 		this.unit.accept(this);
@@ -90,14 +89,13 @@ public class EclipseJDTVisitor extends ASTVisitor {
 		int endLine = unit.getLineNumber(md.getStartPosition() + md.getLength());
 		int loc = 1 + endLine - startLine;
 		md.getModifiers();
-		List<String> paramsAsStrings = new ArrayList<String>();
-		List<SingleVariableDeclaration> params = md.parameters();
+		List<String> paramsAsStrings = new ArrayList<>();
+		List<SingleVariableDeclaration> params = (List<SingleVariableDeclaration>) md.parameters();
 		for (SingleVariableDeclaration variableDeclaration : params) {
 			StringBuilder param = new StringBuilder("");
 			param.append(variableDeclaration.getStructuralProperty(SingleVariableDeclaration.TYPE_PROPERTY).toString());
 			for (int i = 0; i < variableDeclaration.getExtraDimensions(); i++) {
 				param.append("[]");
-				break;
 			}
 			paramsAsStrings.add(param.toString());
 		}
@@ -229,7 +227,7 @@ public class EclipseJDTVisitor extends ASTVisitor {
 		this.tryStatementCounter.incrementAndGet();
 		return true;
 	}
-	
+
 	@Override
 	public boolean visit(ConstructorInvocation node) {
 		return true;
