@@ -3,9 +3,9 @@
 [![Maven Central Status](https://img.shields.io/maven-central/v/io.lightningbug/lightningbug-maven-plugin)](https://mvnrepository.com/artifact/io.lightningbug)
 [![Licensing](https://img.shields.io/github/license/lightningbug-io/lightningbug-maven-plugin)](https://github.com/lightningbug-io/lightningbug-maven-plugin/blob/master/LICENSE)
 [![Travis Build](https://img.shields.io/travis/com/lightningbug-io/lightningbug-maven-plugin)](https://travis-ci.com/lightningbug-io/lightningbug-maven-plugin)
-[![Sonar Cloud Code Coverage](https://img.shields.io/sonar/coverage/lightningbug-io_lightningbug-maven-plugin?server=https%3A%2F%2Fsonarcloud.io)](https://sonarcloud.io/dashboard?id=lightningbug-io_lightningbug-maven-plugin)
+[![Sonar Cloud Code Coverage](https://img.shields.io/sonar/coverage/lightningbug-io_lightningbug-maven-plugin?server=https%3A%2F%2Fsonarcloud.io&label=Sonar%20Cloud%20Coverage)](https://sonarcloud.io/dashboard?id=lightningbug-io_lightningbug-maven-plugin)
 [![Sonar Cloud Quality Gate](https://img.shields.io/sonar/quality_gate/lightningbug-io_lightningbug-maven-plugin?server=https%3A%2F%2Fsonarcloud.io)](https://sonarcloud.io/dashboard?id=lightningbug-io_lightningbug-maven-plugin)
-[![CodeCov Code Coverage](https://img.shields.io/codecov/c/github/lightningbug-io/lightningbug-maven-plugin)](https://codecov.io/gh/lightningbug-io/lightningbug-maven-plugin)
+[![CodeCov Code Coverage](https://img.shields.io/codecov/c/github/lightningbug-io/lightningbug-maven-plugin?label=CodeCov%20Coverage)](https://codecov.io/gh/lightningbug-io/lightningbug-maven-plugin)
 [![Snyk Vulnerabilities](https://img.shields.io/snyk/vulnerabilities/github/lightningbug-io/lightningbug-maven-plugin)](https://app.snyk.io/org/iolightningbug/)
 
 
