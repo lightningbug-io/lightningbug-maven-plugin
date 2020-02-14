@@ -49,7 +49,6 @@ import io.lightningbug.exceptions.LambdaExceptionWrappers;
 
 public class JavaParserVisitor extends VoidVisitorAdapter<Void> implements ASTJavaProjectParsable {
 	private ProjectInfo projectInfo;
-	private JavaParser javaParser;
 	private JavaParserFacade javaParserFacade;
 
 	public JavaParserVisitor(ProjectInfo projectInfo) {
@@ -59,7 +58,6 @@ public class JavaParserVisitor extends VoidVisitorAdapter<Void> implements ASTJa
 	public ProjectInfo processDirectory(File dir, List<DependencyInfo> externalJars) {
 		if (dir.isDirectory()) {
 			Collection<File> files = FileUtils.listFiles(dir, new String[] { "java" }, true);
-			this.javaParser = configureJavaParser();
 			this.javaParserFacade = getJavaParserFacade(dir, externalJars);
 			files.forEach(LambdaExceptionWrappers.handlingConsumerWrapper(file -> this.processJavaFile(file),
 					IOException.class));
@@ -107,7 +105,8 @@ public class JavaParserVisitor extends VoidVisitorAdapter<Void> implements ASTJa
 				.getCorrespondingDeclaration();
 		return new FunctionCallInfo(methodDeclaration.getPackageName(), methodDeclaration.getClassName(),
 				methodDeclaration.getName(), methodCall.getName().getBegin().orElseGet(() -> {
-				    return new Position(0,0);}).line);
+					return new Position(0, 0);
+				}).line);
 	}
 
 	@Override
@@ -119,9 +118,11 @@ public class JavaParserVisitor extends VoidVisitorAdapter<Void> implements ASTJa
 	public void visit(MethodDeclaration node, Void arg) {
 		super.visit(node, arg);
 		int startLine = node.getName().getBegin().orElseGet(() -> {
-		    return new Position(0,0);}).line;
+			return new Position(0, 0);
+		}).line;
 		int endLine = node.getEnd().orElseGet(() -> {
-		    return new Position(0,0);}).line;
+			return new Position(0, 0);
+		}).line;
 		int loc = 1 + endLine - startLine;
 		List<String> paramsAsStrings = new ArrayList<String>();
 		node.getParameters().stream().forEach(param -> paramsAsStrings.add(param.getTypeAsString()));
