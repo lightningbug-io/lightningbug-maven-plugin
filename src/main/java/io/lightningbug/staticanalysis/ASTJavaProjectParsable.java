@@ -22,9 +22,7 @@ public interface ASTJavaProjectParsable {
 	AtomicInteger synchronizedStatementCounter = new AtomicInteger(0);
 	AtomicInteger tryStatementCounter = new AtomicInteger(0);
 	AtomicInteger catchClauseCounter = new AtomicInteger(0);
-	List<FunctionInfo> methods = new ArrayList<FunctionInfo>();
-	List<FunctionCallInfo> functionCalls = new ArrayList<FunctionCallInfo>();
-	List<String> externalDependencies = new ArrayList<String>();
+
 
 	public ProjectInfo processDirectory(File dir, List<DependencyInfo> externalJars);
 

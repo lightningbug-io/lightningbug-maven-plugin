@@ -19,35 +19,6 @@ import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 
-/**
- * @author Mike Krolak
- * @since 1.0
- */
-
-/**
- * @author UKROLMI
- *
- */
-/**
- * @author UKROLMI
- *
- */
-/**
- * @author UKROLMI
- *
- */
-/**
- * @author UKROLMI
- *
- */
-/**
- * @author UKROLMI
- *
- */
-/**
- * @author UKROLMI
- *
- */
 public class GitAnalysis {
 
 	public static Repository openRepository() throws IOException {
@@ -59,11 +30,11 @@ public class GitAnalysis {
 		try (Repository repo = openRepository()) {
 			final String[] list = new File(".").list();
 			Collection<File> files = FileUtils.listFiles(FileUtils.getFile("."), new String[] { "java" }, true);
-			for (String s : list) {
-				System.out.println(s);
-			}
 			if (list == null) {
 				throw new IllegalStateException("Did not find any files at " + new File(".").getAbsolutePath());
+			}
+			for (String s : list) {
+				System.out.println(s);
 			}
 
 			for (File file : files) {

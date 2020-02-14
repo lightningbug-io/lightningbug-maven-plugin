@@ -49,9 +49,9 @@ public class EclipseJDTVisitor extends ASTVisitor {
 	private AtomicInteger tryStatementCounter = new AtomicInteger(0);
 	private AtomicInteger catchStatementCounter = new AtomicInteger(0);
 	private AtomicInteger synchronizedStatementCounter = new AtomicInteger(0);
-	private List<FunctionInfo> methods = new ArrayList<FunctionInfo>();
-	private List<FunctionCallInfo> functionCalls = new ArrayList<FunctionCallInfo>();
-	private List<String> externalDependencies = new ArrayList<String>();
+	private List<FunctionInfo> methods = new ArrayList<>();
+	private List<FunctionCallInfo> functionCalls = new ArrayList<>();
+	private List<String> externalDependencies = new ArrayList<>();
 	private ProjectInfo projectInfo;
 	private ASTParser parser = ASTParser.newParser(AST.JLS8);
 	private CompilationUnit unit;

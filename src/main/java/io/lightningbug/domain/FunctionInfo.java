@@ -20,9 +20,9 @@ public class FunctionInfo {
 	private int endLine = 0;
 	private AtomicInteger cyclotomicComplexity = new AtomicInteger(0);
 	private final String returnType;
-	private List<ContributorInfo> developers = new ArrayList<ContributorInfo>();
-	private List<String> parameters = new ArrayList<String>();
-	private List<FunctionCallInfo> functionCalls = new ArrayList<FunctionCallInfo>();
+	private List<ContributorInfo> developers = new ArrayList<>();
+	private List<String> parameters = new ArrayList<>();
+	private List<FunctionCallInfo> functionCalls = new ArrayList<>();
 
 	public FunctionInfo(final String name, final int loc, final int startLine, final int endLine,
 			final List<String> params, final String returnType, final AtomicInteger cyclotomicComplexity) {

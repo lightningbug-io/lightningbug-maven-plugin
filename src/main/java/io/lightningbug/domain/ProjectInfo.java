@@ -23,12 +23,12 @@ public class ProjectInfo {
 	private final String version;
 	private final String organization;
 	private final ZonedDateTime releaseDate;
-	private final List<ContributorInfo> developers = new ArrayList<ContributorInfo>();
-	private final List<ContributorInfo> testers = new ArrayList<ContributorInfo>();
+	private final List<ContributorInfo> developers = new ArrayList<>();
+	private final List<ContributorInfo> testers = new ArrayList<>();
 	private AtomicInteger loc = new AtomicInteger(0);
-	private List<CodeInfo> classes = new ArrayList<CodeInfo>();
-	private List<CodeInfo> testClasses = new ArrayList<CodeInfo>();
-	private List<DependencyInfo> transitiveDependencies = new ArrayList<DependencyInfo>();
+	private List<CodeInfo> classes = new ArrayList<>();
+	private List<CodeInfo> testClasses = new ArrayList<>();
+	private List<DependencyInfo> transitiveDependencies = new ArrayList<>();
 
 	public ProjectInfo(final MavenProject project, final ZonedDateTime releaseDate) {
 		if (project != null && releaseDate != null) {

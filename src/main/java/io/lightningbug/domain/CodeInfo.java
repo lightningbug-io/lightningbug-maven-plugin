@@ -26,9 +26,9 @@ public class CodeInfo {
 	@JsonProperty
 	private AtomicInteger cyclotomicComplexity = new AtomicInteger(0);
 	@JsonProperty
-	private Set<ContributorInfo> currentContributors = new LinkedHashSet<ContributorInfo>();
-	private List<FunctionInfo> functions = new ArrayList<FunctionInfo>();
-	private Set<String> externalDependencies = new LinkedHashSet<String>();
+	private Set<ContributorInfo> currentContributors = new LinkedHashSet<>();
+	private List<FunctionInfo> functions = new ArrayList<>();
+	private Set<String> externalDependencies = new LinkedHashSet<>();
 
 	/**
 	 * Constructs a BuildInfo instance in the system.

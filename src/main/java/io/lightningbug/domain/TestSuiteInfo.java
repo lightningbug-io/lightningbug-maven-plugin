@@ -14,7 +14,7 @@ public class TestSuiteInfo {
 	private ZonedDateTime startTime;
 	private ZonedDateTime endTime;
 	private String name;
-	private Map<String, TestExecutionInfo> testExecutions = new HashMap<String, TestExecutionInfo>();
+	private Map<String, TestExecutionInfo> testExecutions = new HashMap<>();
 
 	@JsonCreator
 	public TestSuiteInfo(final String name, ZonedDateTime startTime) {

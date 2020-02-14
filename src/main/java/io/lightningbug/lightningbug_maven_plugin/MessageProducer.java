@@ -47,17 +47,15 @@ public class MessageProducer {
 
 		try {
 			Long counter = 1L;
-			while (true) {
-				Headers headers = new RecordHeaders();
-				headers.add(new RecordHeader("header-1", "header-value-1".getBytes()));
-				headers.add(new RecordHeader("header-2", "header-value-2".getBytes()));
-				ProducerRecord<Long, String> record = new ProducerRecord<Long, String>(topicName, null, counter, msg,
-						headers);
+			Headers headers = new RecordHeaders();
+			headers.add(new RecordHeader("header-1", "header-value-1".getBytes()));
+			headers.add(new RecordHeader("header-2", "header-value-2".getBytes()));
+			ProducerRecord<Long, String> record = new ProducerRecord<Long, String>(topicName, null, counter, msg,
+					headers);
 
-				producer.send(record);
-				counter++;
-				TimeUnit.SECONDS.sleep(3);
-			}
+			producer.send(record);
+			counter++;
+			TimeUnit.SECONDS.sleep(3);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		} finally {

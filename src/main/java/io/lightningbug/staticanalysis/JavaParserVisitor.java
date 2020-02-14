@@ -52,7 +52,10 @@ public class JavaParserVisitor extends VoidVisitorAdapter<Void> implements ASTJa
 	private ProjectInfo projectInfo;
 	private JavaParserFacade javaParserFacade;
 	private final Log LOGGER;
-	
+	List<FunctionInfo> methods = new ArrayList<FunctionInfo>();
+	List<FunctionCallInfo> functionCalls = new ArrayList<>();
+	List<String> externalDependencies = new ArrayList<>();
+
 	public JavaParserVisitor(ProjectInfo projectInfo, Log log) {
 		this.projectInfo = projectInfo;
 		this.LOGGER = log;
@@ -89,6 +92,7 @@ public class JavaParserVisitor extends VoidVisitorAdapter<Void> implements ASTJa
 				localCts.add(new JarTypeSolver(jar.getCanonicalLocation()));
 			} catch (IOException e) {
 				e.printStackTrace();
+				LOGGER.error(e.getMessage());
 			}
 		});
 
