@@ -16,9 +16,9 @@ To add the lightningbug-maven-plugin to your Maven project add the following cod
 			<pluginManagement>
 				<plugins>
 					<plugin>
-						<groupId>ai.lightningbug</groupId>
+						<groupId>io.lightningbug</groupId>
 						<artifactId>lightningbug-maven-plugin</artifactId>
-						<version>0.0.4-SNAPSHOT</version>
+						<version>0.0.5-SNAPSHOT</version>
 						<executions>
 							<execution>
 								<goals>
@@ -57,10 +57,13 @@ Lightning Bug was built off the insight in the last sentence.
 
 ### Why are you doing this?
 During the research for a dissertation, the maintainer of this code discovered that many large technology companies have separately developed similar internal solutions for managing flakiness.  The idea behind Lightning Bug was to make a standard tool that would help other companies develop more reliable software.
+
 ### Doesn't SonarQube do this already?
 Not that I can tell.  SonarQube provides static analysis of multiple programming languages but it doesn't establish a chain of trust that the software throughout the dependency tree is reliable.
+
 ### Why choose the name Lightning Bug?
 The moniker Lightning Bugs (known in the UK as glow worms) was used throughout my childhood to describe the family Lampyridae of beetles that are noted for their bioluminescence. Lightning Bug seems like an appropriate term for a flaky test as well. Lightning is largely associated with stochastic events. While their bioluminescence appears random there has been amazing. research into discovering the patterns of this species. Apparently, the bioluminescence is hypothesized to be a signal from males to females. But as a child growing up in the eastern United States they are a source of wonder on many summer nights.
+
 ### What information is Lightning Bug currently collecting?
 * LOC per unit, module, and project (method, class, and project in Java)
 * Cyclotomic Complexity of unit and module
@@ -68,10 +71,9 @@ The moniker Lightning Bugs (known in the UK as glow worms) was used throughout m
 * Hardware state at the time of build
 * Hardware state at the time of test
 * The test signal for each executed test
+
 ### What is the performance impact on the build and the test executions?
 It will vary from project to project.  We are collecting data right now to determine the impact but the aim is to keep it as minimal as possible. 
-
-### How are you avoiding creating Heisenbugs through the additional overhead of Lightning Bug on the SUT?
 
 ### I would like to set up my own Lightning Bug server to maintain confidentiality of my code.  How do I do that?
 Currently the server side solution for Lightning Bug assumes Amazon Web Services hosting.  However, we plan on making it IaaS independent going forward.
