@@ -9,4 +9,4 @@ addons:
 
 script:
   # the following command line builds the project, runs the tests with coverage and then execute the SonarCloud analysis
-  - mvn clean package install org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -Dsonar.projectKey=lightningbug-io_lightningbug-maven-plugin
+  - mvn clean package install org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -Dsonar.projectKey=lightningbug-io_lightningbug-maven-plugin deploy
