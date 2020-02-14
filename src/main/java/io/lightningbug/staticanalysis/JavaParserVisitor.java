@@ -10,6 +10,7 @@ import org.apache.commons.io.FileUtils;
 
 import com.github.javaparser.JavaParser;
 import com.github.javaparser.ParserConfiguration;
+import com.github.javaparser.Position;
 import com.github.javaparser.StaticJavaParser;
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
@@ -105,7 +106,8 @@ public class JavaParserVisitor extends VoidVisitorAdapter<Void> implements ASTJa
 		ResolvedMethodDeclaration methodDeclaration = this.javaParserFacade.solve(methodCall)
 				.getCorrespondingDeclaration();
 		return new FunctionCallInfo(methodDeclaration.getPackageName(), methodDeclaration.getClassName(),
-				methodDeclaration.getName(), methodCall.getName().getBegin().get().line);
+				methodDeclaration.getName(), methodCall.getName().getBegin().orElseGet(() -> {
+				    return new Position(0,0);}).line);
 	}
 
 	@Override
@@ -116,8 +118,10 @@ public class JavaParserVisitor extends VoidVisitorAdapter<Void> implements ASTJa
 	@Override
 	public void visit(MethodDeclaration node, Void arg) {
 		super.visit(node, arg);
-		int startLine = node.getName().getBegin().get().line;
-		int endLine = node.getEnd().get().line;
+		int startLine = node.getName().getBegin().orElseGet(() -> {
+		    return new Position(0,0);}).line;
+		int endLine = node.getEnd().orElseGet(() -> {
+		    return new Position(0,0);}).line;
 		int loc = 1 + endLine - startLine;
 		List<String> paramsAsStrings = new ArrayList<String>();
 		node.getParameters().stream().forEach(param -> paramsAsStrings.add(param.getTypeAsString()));
