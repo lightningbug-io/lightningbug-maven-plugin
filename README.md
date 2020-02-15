@@ -16,6 +16,7 @@ A Maven Plugin for Collecting Metrics for Java Projects
 
 To add the lightningbug-maven-plugin to your Maven project add the following code to your pom.xml file.
 
+```xml
     <project>
     	<build>
 			<pluginManagement>
@@ -49,8 +50,11 @@ To add the lightningbug-maven-plugin to your Maven project add the following cod
 			</pluginManagement>
 		</build>
 	</project>
-
+```
 Note: Please don't copy the entirety of the above code into your pom.xml file.  It won't work.  I am explicitly calling out that the plugin nodes should have a plugins parent node which has a pluginManagement parent node which has a build parent node which has a project parent node.  There are likely going to be other children nodes under project, build, etc.
+
+
+Snapshots of the development version are being deployed to [Sonatype's `snapshots` repository][snap].
 
 ## FAQ
 ### What is the goal of Lightning Bug?
@@ -100,3 +104,5 @@ Yes!  It is on the product roadmap.
 ## Issues
 
 Please consult our [issue management rules](ISSUES.md) before creating or working on issues. 
+
+ [snap]: https://oss.sonatype.org/content/repositories/snapshots/

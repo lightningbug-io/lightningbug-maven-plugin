@@ -1,12 +1,29 @@
+dist: xenial
 language: java
-after_success:
-  - bash <(curl -s https://codecov.io/bash)
+cache:
+  directories:
+  - "$HOME/.m2"
+env:
+  global:
+  - secure: j3+jZ9sM/b+V0TMTMPc/zJknyaE7cnneeXcy2fcZF0K49yC7BVKkmblkaYQHNbIOFL+4piObwd22fnokev1/Fxz2rV9rvETdYsxxnwDynYiGZd8NXHtpSkHlrpFqVbFEqS5tA7NxnsIp7OBpFrSi4JE2bCRawif6E4PvOdwchTxZ5yfAO8Wl9szNkrCXgWowqcQvUNlrb9gYFNuyiLXIkum4H61aYkmh/D3FqDQidKjzvpAhDxyW43w0CYjH8eIK1bKskNjduAP2vDYOoaywsXDsv9pvMhrMKmK04wA5k48AyWBdhZ5uy2/HlX0u8IxxGYTLjw1L2VdceE7LoUK1FiC+asGVbP6+bR4SdMlEXDZ4zS9HzHGuSVGU+PiPGJq1WkFb9QMwUb1jsgBq98xZXArgED44/o6tu/JpboITrdPZ2XrqeqKecftXHaRFFkdrOAv0t8zWJvcszbWpUSgVoAfLKiDPutYP0D9HTosYQd2jyKEOJLOPxi7c7fucWtu2mgJy9NLwJiiJy2r/NX+TmXGtzc5g21vOxJx7khlvfDMNgq/sB/Yvm4lYlB/wNT7W5yIXF8TIk+9LZEV/CVeVryMQvUrCLb7TSksBBJM4movY5aCP4P22v4VyirgW1/uMEGuznPHZ25f+WRPIVECMT31UqYiF8oyR3jDTWIDnisE=
+  - secure: pdNAEM3OywQNWMkXgHU0yUo9N4Wlbqm6oJqptWKd4kw0r7bCniI3c2z4F/q39JBCHOOE5n/LwCPWiMR1E5/DylG7DUphWCug8u7zmSvP80CAeyqxHM4PVRMUNmgbVEPeDwyG+5WbWQbG+SHU1WPC7u6dVuGZJ8iIBllMl3O/qtUBSS6BfnZVX3CiLIASxSJqL5q67uO4ZyfYtORuiYvwpEa7Dn1VOGSG3oYUkkeow96nPnONf5W0JWvkVF3t8QCdjnEPyUZ24UQxnFp866F3PYEjVQFZE5URkeHWj2JY12EhS109x/eb++fgEX5d4HCuhnjuOuHdzOagbCrt65Nu0/D66GMnb3ko7xW6bjWI8juRbfFVnXF5BkRft1PqehXr5M1Ox+guXJB1ZFKN5GCI7/Hv5GSy61UaP5aoabZaeIUygyJTSpFnDHkHr/nb4HLsczqWvu0z0UtBWa7n2HwggxShdeLyOIOHT5yiJJ/BF/Gel+qru7DfezVO/Szbvz6rvFvchxOtR9N7viMcvywAbdI4Oo8uUrBHk8r2pkxarI13L4E//1aMDYIFGtNyyjqrnv9NiKXDKZzyJ+v5S6C3zG4YeBtDHShAb02zys+V11cjk5KhY7+WFlOKruai11mVqr5ERgWp30BjAu6USixzMPh0npcIIUM+DgfPESjH+Fw=
+  - 
+  - 
 addons:
   sonarcloud:
-    organization: "lightningbug-io"
+    organization: lightningbug-io
     token:
-      secure: "n0vuBB1jRba6HjK4Q1bE3Me5Ogs9m5BnlK1nEyTiyAwGPh5HVzNv5aRVwS9O4/fz9remgjhdqSAm09QuYEa1MLgfBrfoXxpryvQDZwj7G/5zrem/fuvL8bcfL4RDX2T2TwW8I3x1vmlXa28l2h+2aMUjJoYte9y4O1LXuCVukIUSoYwQ7SdO2qKCA2Q2pK7cgQKMq0yWTdWCDOavuiSZt3h0spVUAFznEYww8Lh12EEezKEmN51IOdByc5B7mcV3NHckyViPEa/ai+aVRuim+jNF/esWPF2EyRkfCYPkcKSpPuuEREhZGxsOhWaQa5iTv8ZeLPKSyVLhKNmyKf8ohUM6SVjMOkjejKxfQ/FKCXFDDhBCAfW7viDQQZ+AoEEhnLMnq/6RqUmV8EB6k9EFPUKi8SEYvZjd2mL6UNRsTol3Sw9hPKiZZcA6ZjPgItREV8Glopq1C6Z8/9FInhVMTD7ireYLiIoogtEvpPv3f70tqkRFEok1KbcvzY/fVnyPYke1dhYCU5JXLKMgTVsyywCuX3Quu7M56Oa6sRa3pUofdJDb82kzpI70UKJt3JlFO+g1O+CXdKSztI3pCIo3qVpgobe0IS38tYynhhneHkjsX78AyuKxzfKhwlxlJAMxbo+m7QRtFCL5HQdZR1WZ7gh/QRMSZ3Airfq7ksW5PVk="
-
-script:
-  # the following command line builds the project, runs the tests with coverage and then execute the SonarCloud analysis
-  - mvn clean package install org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -Dsonar.projectKey=lightningbug-io_lightningbug-maven-plugin deploy
+      secure: n0vuBB1jRba6HjK4Q1bE3Me5Ogs9m5BnlK1nEyTiyAwGPh5HVzNv5aRVwS9O4/fz9remgjhdqSAm09QuYEa1MLgfBrfoXxpryvQDZwj7G/5zrem/fuvL8bcfL4RDX2T2TwW8I3x1vmlXa28l2h+2aMUjJoYte9y4O1LXuCVukIUSoYwQ7SdO2qKCA2Q2pK7cgQKMq0yWTdWCDOavuiSZt3h0spVUAFznEYww8Lh12EEezKEmN51IOdByc5B7mcV3NHckyViPEa/ai+aVRuim+jNF/esWPF2EyRkfCYPkcKSpPuuEREhZGxsOhWaQa5iTv8ZeLPKSyVLhKNmyKf8ohUM6SVjMOkjejKxfQ/FKCXFDDhBCAfW7viDQQZ+AoEEhnLMnq/6RqUmV8EB6k9EFPUKi8SEYvZjd2mL6UNRsTol3Sw9hPKiZZcA6ZjPgItREV8Glopq1C6Z8/9FInhVMTD7ireYLiIoogtEvpPv3f70tqkRFEok1KbcvzY/fVnyPYke1dhYCU5JXLKMgTVsyywCuX3Quu7M56Oa6sRa3pUofdJDb82kzpI70UKJt3JlFO+g1O+CXdKSztI3pCIo3qVpgobe0IS38tYynhhneHkjsX78AyuKxzfKhwlxlJAMxbo+m7QRtFCL5HQdZR1WZ7gh/QRMSZ3Airfq7ksW5PVk=
+script: mvn clean verify
+after_success:
+- mvn jacoco:report
+- mvn sonar:sonar -Dsonar.projectKey=lightningbug-io_lightningbug-maven-plugin
+- bash <(curl -s https://codecov.io/bash)
+- "[[ ${TRAVIS_PULL_REQUEST} == 'false' ]] && [[ ${TRAVIS_TAG} == '' ]] && mvn deploy
+  -DreposityId=sonatype-nexus-snapshots -Psign-artifacts -DskipTests --settings deploy-settings.xml"
+- "[[ ${TRAVIS_PULL_REQUEST} == 'false' ]] && [[ ${TRAVIS_TAG} != '' ]] && mvn deploy
+  -DreposityId=sonatype-nexus-staging -Psign-artifacts -DskipTests -Drevision=${TRAVIS_TAG}
+  --settings deploy-settings.xml"
+before_install:
+- openssl aes-256-cbc -K $encrypted_c1c9375c4a70_key -iv $encrypted_c1c9375c4a70_iv
+  -in sandycoypu.asc.enc -out .\\sandycoypu.asc -d
