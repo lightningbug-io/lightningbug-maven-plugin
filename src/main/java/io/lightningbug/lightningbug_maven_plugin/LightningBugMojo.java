@@ -112,11 +112,15 @@ public class LightningBugMojo extends AbstractMojo {
 		jpVisitor.processDirectory(new File(this.testSourceDirectory.getAbsolutePath()), transitiveDependencies);
 		BuildInfo buildInfo = new BuildInfo(new InfrastructureInfo(), projectInfo, startTime, ZonedDateTime.now());
 		getLog().debug("About to start generating the file");
-		generateBuildReport(buildInfo);
+		try {
+			generateBuildReport(buildInfo);
+		} catch (IOException e) {
+			getLog().error(e.getMessage());
+		}
 		getLog().info(buildInfo.toString());
 	}
 
-	private void generateBuildReport(BuildInfo buildInfo) {
+	protected boolean generateBuildReport(BuildInfo buildInfo) throws IOException {
 		if (generateBuildReport) {
 			File dir = new File(project.getBuild().getDirectory());
 			if (dir != null && dir.exists() && dir.isDirectory()) {
@@ -127,13 +131,16 @@ public class LightningBugMojo extends AbstractMojo {
 							writer.println(buildInfo.toString());
 						} catch (FileNotFoundException e) {
 							getLog().debug(e.getMessage());
+							throw e;
 						}
 					}
 				} catch (IOException e) {
 					getLog().debug(e.getMessage());
+					throw e;
 				}
 			}
 		}
+		return generateBuildReport;
 	}
 
 }

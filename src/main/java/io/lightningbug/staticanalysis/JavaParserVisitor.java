@@ -7,6 +7,7 @@ import java.util.Collection;
 import java.util.List;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FilenameUtils;
 import org.apache.maven.plugin.logging.Log;
 
 import com.github.javaparser.JavaParser;
@@ -57,28 +58,42 @@ public class JavaParserVisitor extends VoidVisitorAdapter<Void> implements ASTJa
 	List<String> externalDependencies = new ArrayList<>();
 
 	public JavaParserVisitor(ProjectInfo projectInfo, Log log) {
-		this.projectInfo = projectInfo;
-		this.LOGGER = log;
+		if (projectInfo != null && log != null) {
+			this.projectInfo = projectInfo;
+			this.LOGGER = log;
+		} else {
+			throw new IllegalArgumentException("params cannot be null");
+		}
 	}
 
 	public ProjectInfo processDirectory(File dir, List<DependencyInfo> externalJars) {
-		if (dir.isDirectory()) {
-			Collection<File> files = FileUtils.listFiles(dir, new String[] { "java" }, true);
-			this.javaParserFacade = getJavaParserFacade(dir, externalJars);
-			files.forEach(LambdaExceptionWrappers.handlingConsumerWrapper(file -> this.processJavaFile(file),
-					IOException.class));
-		} else {
-			throw new IllegalArgumentException(dir.getAbsolutePath() + " is not a directory");
+		if (dir!= null && externalJars!=null) {
+			if(dir.isDirectory()) {
+				Collection<File> files = FileUtils.listFiles(dir, new String[] { "java" }, true);
+				this.javaParserFacade = getJavaParserFacade(dir, externalJars);
+				files.forEach(LambdaExceptionWrappers.handlingConsumerWrapper(file -> this.processJavaFile(file),
+						IOException.class));
+			} else {
+				throw new IllegalArgumentException(dir.getAbsolutePath() + " is not a directory");
+			}
+		}
+		else {
+			throw new IllegalArgumentException("params cannot be null");
 		}
 		return this.projectInfo;
 	}
 
 	public void processJavaFile(File file) throws IOException {
-		if (!file.isDirectory()) {
-			CompilationUnit compilationUnit = StaticJavaParser.parse(file);
-			compilationUnit.accept(this, null);
+		if (file != null) {
+			if (!file.isDirectory() && FilenameUtils.isExtension(file.getName(), "java")) {
+				CompilationUnit compilationUnit = StaticJavaParser.parse(file);
+				compilationUnit.accept(this, null);
+			} else {
+				throw new IllegalArgumentException(
+						file.getAbsolutePath() + " should not be a directory and must have an extension of java");
+			}
 		} else {
-			throw new IllegalArgumentException(file.getAbsolutePath() + " shoud not be a directory");
+			throw new IllegalArgumentException("file cannot be null");
 		}
 	}
 

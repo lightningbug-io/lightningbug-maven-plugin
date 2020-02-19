@@ -11,14 +11,18 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class TestExecutionInfo {
 	private ZonedDateTime startTime;
 	private ZonedDateTime endTime;
-	private boolean signal;
+	private boolean signal = false;
 	private String name;
 	private int mutationScore = 0;
 
 	@JsonCreator
 	public TestExecutionInfo(String name, ZonedDateTime startTime) {
-		this.name = name;
-		this.startTime = startTime;
+		if (name != null && startTime != null && !name.isEmpty()) {
+			this.name = name;
+			this.startTime = startTime;
+		} else {
+			throw new IllegalArgumentException("Params can not be null");
+		}
 	}
 
 	@JsonGetter("startTime")
@@ -36,10 +40,15 @@ public class TestExecutionInfo {
 	}
 
 	public void setEndTime(ZonedDateTime endTime) {
+		if(endTime !=null) {
 		if (this.endTime == null) {
 			this.endTime = endTime;
 		} else {
 			throw new IllegalArgumentException("end time for " + this.name + " is already set");
+		}
+		}
+		else {
+			throw new IllegalArgumentException("endTime cannot be null");
 		}
 	}
 

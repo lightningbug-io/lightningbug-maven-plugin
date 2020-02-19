@@ -10,7 +10,7 @@
 
 
 
-A Maven Plugin for Collecting Metrics for Java Projects
+A Maven Plugin for Collecting Metrics for Establish a Software Quality Chain of Trust for Java projects
 
 [Lightning Bug](http://www.lightningbug.io) is a tool that aims to collect information about software to establish a chain of trust.  
 

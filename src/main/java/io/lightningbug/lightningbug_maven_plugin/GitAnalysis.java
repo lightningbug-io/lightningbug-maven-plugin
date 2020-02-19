@@ -14,6 +14,9 @@ import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.blame.BlameResult;
 import org.eclipse.jgit.diff.RawText;
 import org.eclipse.jgit.diff.RawTextComparator;
+import org.eclipse.jgit.lib.AnyObjectId;
+import org.eclipse.jgit.lib.Config;
+import org.eclipse.jgit.lib.ConfigConstants;
 import org.eclipse.jgit.lib.PersonIdent;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
@@ -21,29 +24,72 @@ import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 
 public class GitAnalysis {
 
+	public static Git openGit() throws IOException {
+		FileRepositoryBuilder builder = new FileRepositoryBuilder();
+		Repository repo = builder.readEnvironment().findGitDir().build();
+		return Git.open(openRepository().getDirectory());
+	}
+	
 	public static Repository openRepository() throws IOException {
 		FileRepositoryBuilder builder = new FileRepositoryBuilder();
 		return builder.readEnvironment().findGitDir().build();
 	}
 
+	public static void main(String[] args) {
+		test();
+	}
+	
+	public static void testForBug() {
+		try (Repository repo = openRepository()) {
+			final String[] list = new File(".").list();
+		    Collection<File> files = FileUtils.listFiles(FileUtils.getFile("."), new String[] { "java" }, true);
+			for (File file : files) {
+				if (!(file.isDirectory())) {
+					AnyObjectId commitID = repo.resolve("HEAD");
+					System.out.println("Commit ID " + commitID);
+					BlameCommand b = new Git(repo).blame();
+					BlameResult result = b.setFilePath(file.getPath()).call();
+					RawText rawText = result.getResultContents();
+					for (int i = 0; i < rawText.size(); i++) {
+						PersonIdent sourceAuthor = result.getSourceAuthor(i);
+						RevCommit sourceCommit = result.getSourceCommit(i);
+						System.out.println(sourceAuthor.getName() + (sourceCommit != null
+								? "/" + sourceCommit.getCommitTime() + "/" + sourceCommit.getName()
+								: "") + ": " + rawText.getString(i));
+					}
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 	public static void test() {
 		try (Repository repo = openRepository()) {
 			final String[] list = new File(".").list();
-			Collection<File> files = FileUtils.listFiles(FileUtils.getFile("."), new String[] { "java" }, true);
-			if (list == null) {
-				throw new IllegalStateException("Did not find any files at " + new File(".").getAbsolutePath());
-			}
+			Config cfg = repo.getConfig();
+			String name = cfg.getString("user", null, "name");
+            String email = cfg.getString("user", null, "email");
+            String url = cfg.getString("remote", "origin", "url");
+            System.out.println(name + ": " + email + ": " + url);
+			cfg.getSections().forEach(section->{System.out.println(section + "-> ");cfg.getSubsections(section).forEach(System.out::println);});
+			System.out.println(cfg.getString(ConfigConstants.CONFIG_BRANCH_SECTION, "master", ConfigConstants.CONFIG_KEY_REMOTE));
+			
+		    Collection<File> files = FileUtils.listFiles(FileUtils.getFile("."), new String[] { "java" }, true);
 			for (String s : list) {
 				System.out.println(s);
+			}
+			if (list == null) {
+				throw new IllegalStateException("Did not find any files at " + new File(".").getAbsolutePath());
 			}
 
 			for (File file : files) {
 				if (!(file.isDirectory())) {
-					System.out.println("Blaming " + file);
-					BlameCommand b = new Git(repo).blame().setFilePath(file.getPath());
-					System.out.println(b);
-
-					final BlameResult result = new Git(repo).blame().setFilePath(file.getPath()).call();
+					System.out.println("Blaming " + file.getPath());
+					AnyObjectId commitID = repo.resolve("HEAD");
+					System.out.println("Commit ID " + commitID);
+					BlameCommand b = new Git(repo).blame();
+		 //           b.setStartCommit(commitID);
+					final BlameResult result = b.setFilePath(file.getPath()).call();
 					final RawText rawText = result.getResultContents();
 					for (int i = 0; i < rawText.size(); i++) {
 						final PersonIdent sourceAuthor = result.getSourceAuthor(i);
@@ -54,13 +100,11 @@ public class GitAnalysis {
 					}
 				}
 			}
-		} catch (IOException e) {
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (GitAPIException ex) {
-			ex.printStackTrace();
 		}
 	}
-
 	
 	/**
 	 * Gets the blame of each line in a specified file
@@ -71,8 +115,8 @@ public class GitAnalysis {
 	public static List<String> getBlame(File file) {
 		List<String> blameLines = new ArrayList<String>();
 		if (file!= null && file.exists() && file.isFile()) {
-			try (Repository repo = openRepository()) {
-				final BlameResult result = new Git(repo).blame().setFilePath(file.getPath())
+			try (Git git = openGit()) {
+				final BlameResult result = git.blame().setFilePath(file.getPath())
 						.setTextComparator(RawTextComparator.WS_IGNORE_ALL).call();
 				if (result != null) {
 					final RawText rawText = result.getResultContents();
