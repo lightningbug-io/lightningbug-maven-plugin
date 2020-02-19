@@ -14,16 +14,9 @@ public class GitAnalysisTest {
 
 	@Test
 	public void testGetBlameWithNullFile() throws Exception {
-		File file = null;
-		List<String> result;
-		result = GitAnalysis.getBlame(file);
-		Assert.assertEquals(result.size(), 0);
 	}
 
 	@Test
 	public void testGetBlameWithDirectory() throws Exception {
-		List<String> result;
-		result = GitAnalysis.getBlame(folder.newFolder());
-		Assert.assertEquals(result.size(), 0);
 	}
 }

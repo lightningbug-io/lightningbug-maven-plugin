@@ -20,7 +20,6 @@ import com.github.javaparser.ast.stmt.SynchronizedStmt;
 import com.github.javaparser.ast.stmt.TryStmt;
 import com.github.javaparser.ast.stmt.WhileStmt;
 
-import io.lightningbug.domain.DependencyInfo;
 import io.lightningbug.domain.ProjectInfo;
 
 public class JavaParserVisitorTest {
