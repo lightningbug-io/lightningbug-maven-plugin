@@ -65,7 +65,7 @@ A chain of trust is a term from IT security used to describe the level of trust 
 Lightning Bug was built off the insight in the last sentence.
 
 ### Why are you doing this?
-During the research for a dissertation, the maintainer of this code discovered that many large technology companies have separately developed similar internal solutions for managing flakiness.  The idea behind Lightning Bug was to make a standard tool that would help other companies develop more reliable software.
+During the research for a dissertation, the maintainer of this code discovered many large tech companies developed similar internal solutions for managing flakiness.  Lightning Bug is a standard tool which helps other companies develop more reliable software.
 
 ### Doesn't SonarQube do this already?
 Not that I can tell.  SonarQube provides static analysis of multiple programming languages but it doesn't establish a chain of trust that the software throughout the dependency tree is reliable.

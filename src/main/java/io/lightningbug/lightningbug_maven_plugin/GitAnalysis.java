@@ -36,7 +36,7 @@ public class GitAnalysis {
 	}
 
 	public static void main(String[] args) {
-		test();
+		testForBug();
 	}
 	
 	public static void testForBug() {
@@ -48,7 +48,9 @@ public class GitAnalysis {
 					AnyObjectId commitID = repo.resolve("HEAD");
 					System.out.println("Commit ID " + commitID);
 					BlameCommand b = new Git(repo).blame();
-					BlameResult result = b.setFilePath(file.getPath()).call();
+					final String filePath = file.getPath().replaceFirst("[.][\\\\]", "");
+					System.out.println("Blaming " + filePath);
+					final BlameResult result = b.setFilePath(filePath).call();
 					RawText rawText = result.getResultContents();
 					for (int i = 0; i < rawText.size(); i++) {
 						PersonIdent sourceAuthor = result.getSourceAuthor(i);
@@ -84,12 +86,10 @@ public class GitAnalysis {
 
 			for (File file : files) {
 				if (!(file.isDirectory())) {
-					System.out.println("Blaming " + file.getPath());
-					AnyObjectId commitID = repo.resolve("HEAD");
-					System.out.println("Commit ID " + commitID);
 					BlameCommand b = new Git(repo).blame();
-		 //           b.setStartCommit(commitID);
-					final BlameResult result = b.setFilePath(file.getPath()).call();
+					final String filePath = file.getPath().replaceFirst("[.][\\\\]", "");
+					System.out.println("Blaming " + filePath);
+					final BlameResult result = b.setFilePath(filePath).call();
 					final RawText rawText = result.getResultContents();
 					for (int i = 0; i < rawText.size(); i++) {
 						final PersonIdent sourceAuthor = result.getSourceAuthor(i);
