@@ -17,39 +17,39 @@ A Maven Plugin for Collecting Metrics for Establish a Software Quality Chain of 
 To add the lightningbug-maven-plugin to your Maven project add the following code to your pom.xml file.
 
 ```xml
-    <project>
-    	<build>
-			<pluginManagement>
-				<plugins>
-					<plugin>
-						<groupId>io.lightningbug</groupId>
-						<artifactId>lightningbug-maven-plugin</artifactId>
-						<version>0.0.5-SNAPSHOT</version>
-						<executions>
-							<execution>
-								<goals>
-									<goal>lightningbug</goal>
-								</goals>
-							</execution>
-						</executions>
-					</plugin>
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-surefire-plugin</artifactId>
-						<version>3.0.0-M4</version>
-						<configuration>
-							<properties>
-								<property>
-									<name>listener</name>
-									<value>ai.lightningbug.testlisteners.JUnitRunListener</value>
-								</property>
-							</properties>
-						</configuration>
-					</plugin>
-				</plugins>
-			</pluginManagement>
-		</build>
-	</project>
+<project>
+  <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>io.lightningbug</groupId>
+          <artifactId>lightningbug-maven-plugin</artifactId>
+          <version>0.0.5-SNAPSHOT</version>
+            <executions>
+              <execution>
+                <goals>
+                  <goal>lightningbug</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-surefire-plugin</artifactId>
+          <version>3.0.0-M4</version>
+          <configuration>
+            <properties>
+              <property>
+                <name>listener</name>
+                <value>ai.lightningbug.testlisteners.JUnitRunListener</value>
+              </property>
+            </properties>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+  </build>
+</project>
 ```
 Note: Please don't copy the entirety of the above code into your pom.xml file.  It won't work.  I am explicitly calling out that the plugin nodes should have a plugins parent node which has a pluginManagement parent node which has a build parent node which has a project parent node.  There are likely going to be other children nodes under project, build, etc.
 
