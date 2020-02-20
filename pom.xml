@@ -123,7 +123,7 @@
 		<dependency>
 			<groupId>org.eclipse.birt.runtime</groupId>
 			<artifactId>org.eclipse.core.resources</artifactId>
-			<version>3.8.101.v20130717-0806</version>
+			<version>3.10.0.v20150423-0755</version>
 		</dependency>
 		<dependency>
 			<groupId>org.eclipse.platform</groupId>
