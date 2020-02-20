@@ -49,11 +49,28 @@ public class TestSuiteInfoTest {
 	}
 
 	@Test
+	public void testGetEndTimeWhenNull() throws Exception {
+		TestSuiteInfo testSubject = new TestSuiteInfo(TEST,
+				ZonedDateTime.of(2020, 2, 29, 0, 0, 0, 0, ZoneId.of(GMT_5)));
+		Assert.assertEquals(testSubject.getEndTime(), "");
+	}
+
+	
+	@Test
 	public void testSetEndTime() throws Exception {
 		TestSuiteInfo testSubject = new TestSuiteInfo(TEST,
 				ZonedDateTime.of(2020, 2, 29, 0, 0, 0, 0, ZoneId.of(GMT_5)));
 		testSubject.setEndTime(ZonedDateTime.of(2020, 2, 29, 0, 0, 0, 0, ZoneId.of(GMT_5)));
 		Assert.assertEquals(testSubject.getEndTime(), LEAP_DAY);
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testSetEndTimeTwice() throws Exception {
+		TestSuiteInfo testSubject = new TestSuiteInfo(TEST,
+				ZonedDateTime.of(2020, 2, 29, 0, 0, 0, 0, ZoneId.of(GMT_5)));
+		testSubject.setEndTime(ZonedDateTime.of(2020, 2, 29, 0, 0, 0, 0, ZoneId.of(GMT_5)));
+		testSubject.setEndTime(ZonedDateTime.of(2020, 2, 28, 0, 0, 0, 0, ZoneId.of(GMT_5)));
+		Assert.fail();
 	}
 
 	@Test(expected = IllegalArgumentException.class)
@@ -68,6 +85,15 @@ public class TestSuiteInfoTest {
 	public void testGetName() throws Exception {
 		TestSuiteInfo testSubject = new TestSuiteInfo(TEST, ZonedDateTime.now());
 		Assert.assertEquals(testSubject.getName(), TEST);
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void testAddTestExecutionTwice() throws Exception {
+		TestSuiteInfo testSubject = new TestSuiteInfo(TEST, ZonedDateTime.now());
+		TestExecutionInfo tei = mock(TestExecutionInfo.class);
+		testSubject.addTestExecution(tei);
+		testSubject.addTestExecution(tei);
+		Assert.fail();
 	}
 
 	@Test

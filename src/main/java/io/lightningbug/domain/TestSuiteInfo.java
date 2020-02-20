@@ -11,9 +11,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class TestSuiteInfo {
-	private ZonedDateTime startTime;
+	private final ZonedDateTime startTime;
 	private ZonedDateTime endTime;
-	private String name;
+	private final String name;
 	private Map<String, TestExecutionInfo> testExecutions = new HashMap<>();
 
 	@JsonCreator
@@ -28,11 +28,7 @@ public class TestSuiteInfo {
 
 	@JsonGetter("startTime")
 	public String getStartTime() {
-		if (this.startTime != null) {
-			return startTime.format(DateTimeFormatter.ISO_ZONED_DATE_TIME);
-		} else {
-			return "";
-		}
+		return startTime.format(DateTimeFormatter.ISO_ZONED_DATE_TIME);
 	}
 
 	@JsonGetter("endTime")
@@ -62,14 +58,6 @@ public class TestSuiteInfo {
 
 	public Map<String, TestExecutionInfo> getTestExecutions() {
 		return testExecutions;
-	}
-
-	public void updateTestExecution(final TestExecutionInfo testInfo) {
-		if (testExecutions.containsKey(testInfo.getName())) {
-			testExecutions.put(testInfo.getName(), testInfo);
-		} else {
-			throw new IllegalArgumentException(testInfo.getName() + " doesn't already existing in the testExecutions");
-		}
 	}
 
 	public void addTestExecution(final TestExecutionInfo testInfo) {

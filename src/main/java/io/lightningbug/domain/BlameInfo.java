@@ -3,6 +3,8 @@
  */
 package io.lightningbug.domain;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+
 /**
  * @author M. Krolak
  * @since 0.0.5
@@ -23,6 +25,7 @@ public class BlameInfo {
 	 * @param line      the positive number associated with the line of code referred to by this blame
 	 * @param timestamp the positive number of seconds from epoch to the commit
 	 */
+	@JsonCreator
 	public BlameInfo(ContributorInfo developer, String commitId, int line, long timestamp) {
 		if (developer != null && commitId != null && !commitId.isEmpty() && line > 0 && timestamp > 0 ) {
 			this.developer = developer;
