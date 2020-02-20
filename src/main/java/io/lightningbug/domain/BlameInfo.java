@@ -22,7 +22,6 @@ public class BlameInfo {
 	 * @param commitId  non null, non empty, unique identifier of the commit in the SCM system
 	 * @param line      the positive number associated with the line of code referred to by this blame
 	 * @param timestamp the positive number of seconds from epoch to the commit
-	 * @return BlameInfo
 	 */
 	public BlameInfo(ContributorInfo developer, String commitId, int line, long timestamp) {
 		if (developer != null && commitId != null && !commitId.isEmpty() && line > 0 && timestamp > 0 ) {
