@@ -18,6 +18,9 @@ import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 
+import io.lightningbug.domain.BlameInfo;
+import io.lightningbug.domain.ContributorInfo;
+
 public class GitAnalysis {
 	private static final Pattern WINDOWS_FILE_SEPARATOR = Pattern.compile("[\\\\]");
 	private static final Pattern LEADING_DOT_SLASH = Pattern.compile("[.][\\\\]");
@@ -37,22 +40,9 @@ public class GitAnalysis {
 		getBlameForProject();
 	}
 
-	public static void testForBug() {
-		Pattern windowsFilesystemSeparators = Pattern.compile("[\\\\]");
-		Pattern leadingDotSlash = Pattern.compile("[.][\\\\]");
-		try (Git git = openGit()) {
-			Collection<File> files = FileUtils.listFiles(FileUtils.getFile("./src"), new String[] { "java" }, true);
-			for (File file : files) {
-				getFileBlame(git, file);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
 	public static List<String> getBlameForProject() {
 		List<String> blameLines = new ArrayList<String>();
-		
+
 		try (Git git = openGit()) {
 			Collection<File> files = FileUtils.listFiles(FileUtils.getFile("./src"), new String[] { "java" }, true);
 			for (File file : files) {
@@ -71,8 +61,8 @@ public class GitAnalysis {
 	 *             empty list
 	 * @return List of all of the lines of code blamed
 	 */
-	public static void getFileBlame(Git git, File file)
-			throws GitAPIException {
+	public static List<BlameInfo> getFileBlame(Git git, File file) throws GitAPIException {
+		List<BlameInfo> blameLines = new ArrayList<>();
 		if (!(file.isDirectory())) {
 			BlameCommand b = git.blame();
 			String filePath = LEADING_DOT_SLASH.matcher(file.getPath()).replaceFirst("");
@@ -82,10 +72,10 @@ public class GitAnalysis {
 			for (int i = 0; i < rawText.size(); i++) {
 				PersonIdent sourceAuthor = result.getSourceAuthor(i);
 				RevCommit sourceCommit = result.getSourceCommit(i);
-				System.out.println(sourceAuthor.getName() + (sourceCommit != null
-						? "/" + sourceCommit.getCommitTime() + "/" + sourceCommit.getName()
-						: "") + ": " + rawText.getString(i));
+				ContributorInfo ci = new ContributorInfo(sourceAuthor.getName(), sourceAuthor.getEmailAddress());
+				blameLines.add(new BlameInfo(ci, sourceCommit.getName(), i, sourceCommit.getCommitTime()));
 			}
 		}
+		return blameLines;
 	}
 }
