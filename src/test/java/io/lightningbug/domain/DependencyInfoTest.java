@@ -3,10 +3,12 @@ package io.lightningbug.domain;
 import java.io.File;
 import java.io.IOException;
 
+import org.apache.maven.model.Dependency;
 import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
+import org.mockito.Mockito;
 
 public class DependencyInfoTest {
 	@Rule
@@ -18,6 +20,12 @@ public class DependencyInfoTest {
 		Assert.fail();
 	}
 
+	@Test
+	public void testCreateDependencyInfoWithDependency() {
+		DependencyInfo di = new DependencyInfo(Mockito.mock(Dependency.class));
+		Assert.assertNotNull(di);
+	}
+	
 	@Test(expected = IllegalArgumentException.class)
 	public void testCreateDependencyInfoWithNulls() {
 		new DependencyInfo(null, null, null, null, null);

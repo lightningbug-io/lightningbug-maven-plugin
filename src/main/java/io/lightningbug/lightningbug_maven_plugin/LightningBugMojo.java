@@ -57,7 +57,7 @@ public class LightningBugMojo extends AbstractMojo {
 	 * @required
 	 * @readonly
 	 */
-	@Parameter(property = "generateCodeReport", required = false)
+	@Parameter(property = "generateBuildReport", required = false)
 	private boolean generateBuildReport;
 
 	/**
@@ -121,10 +121,13 @@ public class LightningBugMojo extends AbstractMojo {
 	}
 
 	protected boolean generateBuildReport(BuildInfo buildInfo) throws IOException {
+		getLog().debug("Are we going to generate build report" + generateBuildReport);
 		if (generateBuildReport) {
 			File dir = new File(project.getBuild().getDirectory());
+			getLog().debug(project.getBuild().getDirectory());
 			if (dir != null && dir.exists() && dir.isDirectory()) {
 				File file = new File(dir.getAbsolutePath() + "\\lightningbug" + System.currentTimeMillis() + ".json");
+				getLog().debug("Writing to " + dir.getAbsolutePath() + "\\lightningbug" + System.currentTimeMillis() + ".json");
 				try {
 					if (file.createNewFile()) {
 						try (PrintWriter writer = new PrintWriter(file)) {

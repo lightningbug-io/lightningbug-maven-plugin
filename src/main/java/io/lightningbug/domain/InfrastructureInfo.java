@@ -118,7 +118,7 @@ public class InfrastructureInfo {
 		return NUMBER_FORMAT.format((runtime.freeMemory() + (runtime.maxMemory() - runtime.totalMemory())) / 1024);
 	}
 
-	public String DiskInfo() {
+	public String getDiskInfo() {
 		File[] roots = File.listRoots();
 		StringBuilder sb = new StringBuilder();
 		for (File root : roots) {

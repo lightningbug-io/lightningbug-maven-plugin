@@ -67,8 +67,8 @@ public class JavaParserVisitor extends VoidVisitorAdapter<Void> implements ASTJa
 	}
 
 	public ProjectInfo processDirectory(File dir, List<DependencyInfo> externalJars) {
-		if (dir!= null && externalJars!=null) {
-			if(dir.isDirectory()) {
+		if (dir != null && externalJars != null) {
+			if (dir.isDirectory()) {
 				Collection<File> files = FileUtils.listFiles(dir, new String[] { "java" }, true);
 				this.javaParserFacade = getJavaParserFacade(dir, externalJars);
 				files.forEach(LambdaExceptionWrappers.handlingConsumerWrapper(file -> this.processJavaFile(file),
@@ -76,8 +76,7 @@ public class JavaParserVisitor extends VoidVisitorAdapter<Void> implements ASTJa
 			} else {
 				throw new IllegalArgumentException(dir.getAbsolutePath() + " is not a directory");
 			}
-		}
-		else {
+		} else {
 			throw new IllegalArgumentException("params cannot be null");
 		}
 		return this.projectInfo;
@@ -149,19 +148,15 @@ public class JavaParserVisitor extends VoidVisitorAdapter<Void> implements ASTJa
 		List<String> paramsAsStrings = new ArrayList<String>();
 		node.getParameters().stream().forEach(param -> paramsAsStrings.add(param.getTypeAsString()));
 		List<MethodCallExpr> calls = node.findAll(MethodCallExpr.class);
-		calls.forEach(m -> {
-			try {
-				functionCalls.add(resolveMethodStatements(m));
-			} catch (UnsolvedSymbolException ex) {
-				LOGGER.error("Couldn't find " + m.getNameAsString());
-			} catch (RuntimeException ex) {
-				LOGGER.error("Hit a runtime exception: " + ex.getMessage());
-			}
-		});
+		calls.forEach(m -> functionCalls.add(resolveMethodStatements(m)));
 		FunctionInfo functionInfo = new FunctionInfo(node.getNameAsString(), loc, startLine, endLine, paramsAsStrings,
 				node.getTypeAsString(), cyclotomicComplexityCounter);
 		functionCalls.forEach(functionCall -> functionInfo.addFunctionCall(functionCall));
 		methods.add(functionInfo);
+		initializeMethods();
+	}
+
+	protected void initializeMethods() {
 		functionCalls.clear();
 		cyclotomicComplexityCounter.set(1);
 		tryStatementCounter.set(0);
@@ -171,7 +166,7 @@ public class JavaParserVisitor extends VoidVisitorAdapter<Void> implements ASTJa
 
 	@Override
 	public void visit(ClassOrInterfaceDeclaration node, Void arg) {
-		super.visit(node, arg);
+//		super.visit(node, arg);
 		if (!node.isInterface() && !node.isAbstract()) {
 			CodeInfo codeInfo = new CodeInfo(node.getFullyQualifiedName().get());
 			methods.forEach((method) -> {
@@ -180,6 +175,7 @@ public class JavaParserVisitor extends VoidVisitorAdapter<Void> implements ASTJa
 			});
 			externalDependencies.forEach(externalDependency -> codeInfo.addExternalDependencies(externalDependency));
 			projectInfo.addClass(codeInfo);
+			projectInfo.getClasses().forEach(System.out::println);
 			methods.clear();
 			externalDependencies.clear();
 		}
