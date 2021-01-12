@@ -92,7 +92,7 @@
 		<dependency>
 			<groupId>com.github.oshi</groupId>
 			<artifactId>oshi-core</artifactId>
-			<version>4.4.0</version>
+			<version>4.4.1</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.eclipse.jgit/org.eclipse.jgit -->
 		<dependency>
