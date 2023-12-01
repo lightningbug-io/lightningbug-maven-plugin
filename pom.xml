@@ -56,7 +56,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.java.version>1.8</project.java.version>
 		<project.execution.environment>JavaSE-1.8</project.execution.environment>
-		<maven.version>3.6.3</maven.version>
+		<maven.version>3.9.6</maven.version>
 		<plexus.utils.version>3.0.24</plexus.utils.version>
 		<plexus.component.metadata.version>1.6</plexus.component.metadata.version>
 		<commons.io.version>2.5</commons.io.version>
